@@ -18,24 +18,28 @@ public class ShooterSubsystem extends SubsystemBase {
   public ShooterSubsystem() {
     
   }
-  Victor m_l_shooter = new Victor(6); 
-  Victor m_r_shooter = new Victor(7);
-  Victor m_conveyer = new Victor(5);
   
-  public static ShooterSubsystem getInstance(){
-    if (m_shoot == null){
+  static Victor m_l_shooter = new Victor(6);
+  static Victor m_r_shooter = new Victor(7);
+  Victor m_conveyer = new Victor(5);
+
+  public static ShooterSubsystem getInstance() {
+    if (m_shoot == null) {
       m_shoot = new ShooterSubsystem();
     }
 
     return m_shoot;
   }
 
-
-  public void shoot(double trueSpeed) {
-    m_l_shooter.set(trueSpeed);
-    m_r_shooter.set(-trueSpeed);
+  public void shoot(double shootSpeed) {
+    m_l_shooter.set(shootSpeed);
+    m_r_shooter.set(-shootSpeed);
   }
   
+  public void convey(double conveySpeed) {
+    m_conveyer.set(conveySpeed);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

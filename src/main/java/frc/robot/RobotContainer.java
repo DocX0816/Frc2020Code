@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.Empty;
 import frc.robot.commands.ReverseDrive;
+import frc.robot.commands.Shoot;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,6 +34,7 @@ public class RobotContainer {
   private final Empty m_empty;
   private final ReverseDrive m_reverseDrive;
   private final ShooterSubsystem m_shoot;
+  private final Shoot m_shootCommand;
 
   //private final DriveSubsystem m_drive = new DriveSubsystem();
   //private final DefaultDrive m_defaultDrive = new DefaultDrive(m_drive);
@@ -48,9 +50,14 @@ public class RobotContainer {
     m_drive = DriveSubsystem.getInstance(); // intialize drive subsystem
     m_defaultDrive = new DefaultDrive(m_drive, this); // intialize command
     m_drive.setDefaultCommand(m_defaultDrive); // set default for drivesubsystem
+
     m_empty = new Empty(); //intialize empty
+
     m_reverseDrive = new ReverseDrive(m_drive, this); // intialize reverse drive command 
+
     m_shoot = ShooterSubsystem.getInstance();
+    m_shootCommand = new Shoot(m_shoot,this);
+    m_shoot.setDefaultCommand(m_shootCommand);
   }
 
   public DefaultDrive get_defaultDrive(){
@@ -58,6 +65,9 @@ public class RobotContainer {
   }
   public ReverseDrive get_reverseDrive(){
     return m_reverseDrive;
+  }
+  public Shoot get_shootCommand() {
+    return m_shootCommand;
   }
 
   public static RobotContainer getInstance(){
