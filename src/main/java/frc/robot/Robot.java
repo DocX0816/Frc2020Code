@@ -7,6 +7,13 @@
 
 package frc.robot;
 
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -33,6 +40,24 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    new Thread(() -> {
+      UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+      camera.setResolution(320, 240);
+
+      CvSink cvSink = CameraServer.getInstance().getVideo();
+      CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 320, 240);
+
+      Mat source = new Mat();
+      Mat output = new Mat();
+
+      while(!Thread.interrupted()) {
+        if (cvSink.grabFrame(source) == 0) {
+          continue;
+        }
+        Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+        outputStream.putFrame(output);
+      }
+    }).start();
   }
 
   /**
@@ -99,24 +124,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    m_robotContainer.get_reverseDrive().execute();
-  /** 
-    if(counter % 2 == 0) {
-      m_robotContainer.get_reverseDrive().execute();
-      if (m_robotContainer.stick().getRawButtonPressed(6)) {
-        counter = counter + 1;
-      }
-    }
-    else if(counter % 2 == 1) {
-      m_robotContainer.get_reverseDrive().execute();
-      if (m_robotContainer.stick().getRawButtonPressed(6)) {
-        counter = counter + 1;
-      }
-    }
-    else {
-      m_robotContainer.getAutonomousCommand();
-    }
-    /** */
+    m_robotContainer.get_defaultDrive().execute();
+
     }
    
   @Override

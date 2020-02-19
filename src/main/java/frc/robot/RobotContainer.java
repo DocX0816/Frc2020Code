@@ -14,6 +14,7 @@ import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.Empty;
 import frc.robot.commands.ReverseDrive;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -31,6 +32,7 @@ public class RobotContainer {
   private static RobotContainer m_robotContainer;
   private final Empty m_empty;
   private final ReverseDrive m_reverseDrive;
+  private final ShooterSubsystem m_shoot;
 
   //private final DriveSubsystem m_drive = new DriveSubsystem();
   //private final DefaultDrive m_defaultDrive = new DefaultDrive(m_drive);
@@ -42,11 +44,13 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    m_drive = DriveSubsystem.getInstance();
-    m_defaultDrive = new DefaultDrive(m_drive, this);
-    m_drive.setDefaultCommand(m_defaultDrive);
-    m_empty = new Empty();
-    m_reverseDrive = new ReverseDrive(m_drive, this);
+
+    m_drive = DriveSubsystem.getInstance(); // intialize drive subsystem
+    m_defaultDrive = new DefaultDrive(m_drive, this); // intialize command
+    m_drive.setDefaultCommand(m_defaultDrive); // set default for drivesubsystem
+    m_empty = new Empty(); //intialize empty
+    m_reverseDrive = new ReverseDrive(m_drive, this); // intialize reverse drive command 
+    m_shoot = ShooterSubsystem.getInstance();
   }
 
   public DefaultDrive get_defaultDrive(){
@@ -65,6 +69,10 @@ public class RobotContainer {
 
   public Joystick stick() {
     return m_stick;
+  }
+
+  public Boolean getRB() {
+    return m_stick.getRawButtonPressed(5);
   }
 
    
