@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.Convey;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.Empty;
 import frc.robot.commands.ReverseDrive;
@@ -35,6 +36,7 @@ public class RobotContainer {
   private final ReverseDrive m_reverseDrive;
   private final ShooterSubsystem m_shoot;
   private final Shoot m_shootCommand;
+  private final Convey m_conveyCommand;
 
   //private final DriveSubsystem m_drive = new DriveSubsystem();
   //private final DefaultDrive m_defaultDrive = new DefaultDrive(m_drive);
@@ -57,7 +59,10 @@ public class RobotContainer {
 
     m_shoot = ShooterSubsystem.getInstance();
     m_shootCommand = new Shoot(m_shoot,this);
+    m_conveyCommand = new Convey(m_shoot, this);
     m_shoot.setDefaultCommand(m_shootCommand);
+
+
   }
 
   public DefaultDrive get_defaultDrive(){
@@ -68,6 +73,9 @@ public class RobotContainer {
   }
   public Shoot get_shootCommand() {
     return m_shootCommand;
+  }
+  public Convey get_conveyCommand(){
+    return m_conveyCommand;
   }
 
   public static RobotContainer getInstance(){

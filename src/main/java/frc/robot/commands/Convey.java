@@ -7,25 +7,22 @@
 
 package frc.robot.commands;
 
-
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class DefaultDrive extends CommandBase {
+public class Convey extends CommandBase {
   /**
-   * Creates a new DefaultDrive.
+   * Creates a new Convey.
    */
-  //private final DriveSubsystem m_drive = new DriveSubsystem();
-  private final DriveSubsystem m_drive;
   private final RobotContainer m_robotContainer;
+  private final ShooterSubsystem m_shoot;
   
-  public DefaultDrive(DriveSubsystem drive, RobotContainer robotContainer) {
-    m_drive = drive;
-    m_robotContainer = robotContainer;
+  public Convey(ShooterSubsystem shoot, RobotContainer robotContainer) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drive);
+    m_shoot = shoot;
+    m_robotContainer = robotContainer;
+    addRequirements(shoot);
   }
 
   // Called when the command is initially scheduled.
@@ -36,13 +33,16 @@ public class DefaultDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.tankDrive(0.8 * (m_robotContainer.stick().getThrottle()) , 0.8 * (m_robotContainer.stick().getY()));
+    if (m_robotContainer.stick().getRawButtonPressed(6)) {
+      m_shoot.convey(0.5);
+    } else {
+      m_shoot.convey(0);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
   }
 
   // Returns true when the command should end.

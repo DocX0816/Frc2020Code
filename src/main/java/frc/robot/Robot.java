@@ -126,6 +126,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     m_robotContainer.get_defaultDrive().execute();
     m_robotContainer.get_shootCommand().execute();
+    m_robotContainer.get_conveyCommand().execute();
     }
    
   @Override
