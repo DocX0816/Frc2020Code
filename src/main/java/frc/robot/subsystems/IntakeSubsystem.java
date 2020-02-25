@@ -10,34 +10,26 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ShooterSubsystem extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
   /**
-   * Creates a new ShooterSubsystem.
+   * Creates a new IntakeSubsystem.
    */
-  public static ShooterSubsystem m_shoot = new ShooterSubsystem();
-  public ShooterSubsystem() {
-    
-  }
-  
-  Victor m_l_shooter = new Victor(6);
-  Victor m_r_shooter = new Victor(7);
-  Victor m_conveyer = new Victor(5);
+  public static IntakeSubsystem m_intake;
+  public IntakeSubsystem() {
 
-  public static ShooterSubsystem getInstance() {
-    if (m_shoot == null) {
-      m_shoot = new ShooterSubsystem();
+  }
+
+  Victor m_motorIntake = new Victor(8);
+
+  public static IntakeSubsystem getInstance(){
+    if (m_intake == null){
+      m_intake = new IntakeSubsystem();
     }
-
-    return m_shoot;
+    return m_intake;
   }
 
-  public void shoot(double shootSpeed) {
-    m_l_shooter.set(shootSpeed);
-    m_r_shooter.set(-shootSpeed);
-  }
-  
-  public void convey(double conveySpeed) {
-    m_conveyer.set(conveySpeed);
+  public void intakeFunc(double intakeSpeed) {
+    m_motorIntake.set(intakeSpeed);
   }
 
   @Override

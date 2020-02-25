@@ -28,7 +28,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-  private Command m_defaultDrive;
+
 
 
   /**
@@ -127,6 +127,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.get_defaultDrive().execute();
     m_robotContainer.get_shootCommand().execute();
     m_robotContainer.get_conveyCommand().execute();
+    m_robotContainer.get_intakeCommand().execute();
     }
    
   @Override

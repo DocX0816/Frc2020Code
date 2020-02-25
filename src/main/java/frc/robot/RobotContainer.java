@@ -13,9 +13,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.Convey;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.Empty;
+import frc.robot.commands.Intake;
 import frc.robot.commands.ReverseDrive;
 import frc.robot.commands.Shoot;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -37,11 +39,18 @@ public class RobotContainer {
   private final ShooterSubsystem m_shoot;
   private final Shoot m_shootCommand;
   private final Convey m_conveyCommand;
+  private final IntakeSubsystem m_intake;
+  private final Intake m_intakeCommand;
 
   //private final DriveSubsystem m_drive = new DriveSubsystem();
   //private final DefaultDrive m_defaultDrive = new DefaultDrive(m_drive);
   //private final Empty m_empty = new Empty();
+
+
   private final Joystick m_stick = new Joystick(0);
+  private final Joystick m_bigStick = new Joystick(1);
+
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -62,6 +71,9 @@ public class RobotContainer {
     m_conveyCommand = new Convey(m_shoot, this);
     m_shoot.setDefaultCommand(m_shootCommand);
 
+    m_intake = IntakeSubsystem.getInstance();
+    m_intakeCommand = new Intake(m_intake, this);
+    m_intake.setDefaultCommand(m_intakeCommand);
 
   }
 
@@ -78,6 +90,9 @@ public class RobotContainer {
     return m_conveyCommand;
   }
 
+public Intake get_intakeCommand() {
+  return m_intakeCommand;
+}
   public static RobotContainer getInstance(){
     if(m_robotContainer == null){
       m_robotContainer = new RobotContainer();
@@ -87,6 +102,10 @@ public class RobotContainer {
 
   public Joystick stick() {
     return m_stick;
+  }
+
+  public Joystick bigStick() {
+    return m_bigStick;
   }
 
   public Boolean getRB() {
