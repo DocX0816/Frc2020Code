@@ -33,8 +33,8 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_robotContainer.getRB())  {
-      m_shoot.shoot(1);
+    if(m_robotContainer.bigStick().getRawButton(1) )  {
+      m_shoot.shoot(0.8);
      } else {
       m_shoot.shoot(0);
     }

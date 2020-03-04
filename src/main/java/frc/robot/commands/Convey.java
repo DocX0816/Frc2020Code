@@ -33,11 +33,7 @@ public class Convey extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_robotContainer.bigStick().getRawButtonPressed(6)) {
-      m_shoot.convey(0.5);
-    } else {
-      m_shoot.convey(0);
-    }
+    m_shoot.convey(m_robotContainer.bigStick().getY());
   }
 
   // Called once the command ends or is interrupted.

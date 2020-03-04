@@ -36,7 +36,7 @@ public class DefaultDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.tankDrive(0.8 * (m_robotContainer.stick().getThrottle()) , 0.8 * (m_robotContainer.stick().getY()));
+    m_drive.gyroDrive(0.9 * (m_robotContainer.stick().getThrottle()) , 0.8 * (m_robotContainer.stick().getY()));
   }
 
   // Called once the command ends or is interrupted.
