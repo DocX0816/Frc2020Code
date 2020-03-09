@@ -9,21 +9,21 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
 
-public class Intake extends CommandBase {
+public class GyroTurn extends CommandBase {
   /**
-   * Creates a new Intake.
+   * Creates a new GyroTurn.
    */
-  private final RobotContainer m_robotContainer;
-  private final IntakeSubsystem m_intake;
 
-  public Intake(IntakeSubsystem intake, RobotContainer robotContainer) {
-    
-    // Use addRequirements() here to declare subsystem dependencies.
-    m_intake = intake;
+  private final DriveSubsystem m_drive;
+  private final RobotContainer m_robotContainer;
+
+  public GyroTurn(DriveSubsystem drive, RobotContainer robotContainer) {
+    m_drive = drive;
     m_robotContainer = robotContainer;
-    addRequirements(intake);
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(drive);
   }
 
   // Called when the command is initially scheduled.
@@ -34,13 +34,8 @@ public class Intake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_robotContainer.stick().getRawButton(6)) {
-      m_intake.intakeFunc(0.6);
-    } else if (m_robotContainer.stick().getRawButton(8)){
-      m_intake.intakeFunc(-0.6);
-    } else {
-      m_intake.intakeFunc(0);
-    }
+
+    m_drive.gyroTurnFunc();
 
   }
 

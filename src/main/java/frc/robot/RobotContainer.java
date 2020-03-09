@@ -7,6 +7,11 @@
 
 package frc.robot;
 
+
+//import com.analog.adis16448.frc.ADIS16448_IMU;
+
+//import com.analog.adis16448.frc.ADIS16448_IMU;
+
 //import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -17,6 +22,7 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 import frc.robot.commands.Convey;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.Empty;
+import frc.robot.commands.GyroTurn;
 import frc.robot.commands.Intake;
 import frc.robot.commands.ReverseDrive;
 import frc.robot.commands.Shoot;
@@ -37,6 +43,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DefaultDrive m_defaultDrive;
   private final DriveSubsystem m_drive;
+  private final GyroTurn m_gyroTurn;
   private static RobotContainer m_robotContainer;
   private final Empty m_empty;
   private final ReverseDrive m_reverseDrive;
@@ -45,6 +52,7 @@ public class RobotContainer {
   private final Convey m_conveyCommand;
   private final IntakeSubsystem m_intake;
   private final Intake m_intakeCommand;
+  
 
   //private final DriveSubsystem m_drive = new DriveSubsystem();
   //private final DefaultDrive m_defaultDrive = new DefaultDrive(m_drive);
@@ -53,8 +61,10 @@ public class RobotContainer {
 
   private final Joystick m_stick = new Joystick(0);
   private final Joystick m_bigStick = new Joystick(1);
- 
+  //private final ADIS16448_IMU imu = new ADIS16448_IMU();
 
+  //private final ADIS16448_IMU gyro = new ADIS16448_IMU();
+  private final AnalogGyro gyro = new AnalogGyro(0);
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -63,8 +73,9 @@ public class RobotContainer {
     configureButtonBindings();
 
 
-    m_drive = DriveSubsystem.getInstance(); // intialize drive subsystem
+    m_drive = DriveSubsystem.getInstance(this); // intialize drive subsystem
     m_defaultDrive = new DefaultDrive(m_drive, this); // intialize command
+    m_gyroTurn = new GyroTurn(m_drive, this);
     m_drive.setDefaultCommand(m_defaultDrive); // set default for drivesubsystem
 
     m_empty = new Empty(); //intialize empty
@@ -80,10 +91,16 @@ public class RobotContainer {
     m_intakeCommand = new Intake(m_intake, this);
     m_intake.setDefaultCommand(m_intakeCommand);
 
+    
+    
+
   }
 
   public DefaultDrive get_defaultDrive(){
     return m_defaultDrive;
+  }
+  public GyroTurn get_gyroTurn() {
+    return m_gyroTurn;
   }
   public ReverseDrive get_reverseDrive(){
     return m_reverseDrive;
@@ -116,6 +133,10 @@ public Intake get_intakeCommand() {
   public Boolean getRB() {
     return m_stick.getRawButtonPressed(5);
   }
+
+  public AnalogGyro getGyro(){
+    return gyro;
+  }
    
 /**
    * Use this method to define your button->command mappings.  Buttons can be created by
@@ -134,6 +155,6 @@ public Intake get_intakeCommand() {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return (Command) m_empty;
+    return (Command) m_gyroTurn;
   }
 }

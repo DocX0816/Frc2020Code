@@ -34,7 +34,7 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
     if(m_robotContainer.bigStick().getRawButton(1) )  {
-      m_shoot.shoot(0.8);
+      m_shoot.shoot(-0.8);
      } else {
       m_shoot.shoot(0);
     }

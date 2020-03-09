@@ -14,10 +14,7 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -96,7 +93,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -108,6 +104,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    m_robotContainer.get_gyroTurn();
   }
 
   @Override
@@ -131,7 +128,11 @@ public class Robot extends TimedRobot {
     m_robotContainer.get_shootCommand().execute();
     m_robotContainer.get_conveyCommand().execute();
     m_robotContainer.get_intakeCommand().execute();
+    if(m_robotContainer.stick().getRawButtonPressed(5)) {
+      m_robotContainer.getGyro().reset();
+      m_robotContainer.getGyro().calibrate();
     }
+  }
    
   @Override
   public void testInit() {
