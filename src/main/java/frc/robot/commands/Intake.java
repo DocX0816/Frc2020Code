@@ -35,9 +35,9 @@ public class Intake extends CommandBase {
   @Override
   public void execute() {
     if (m_robotContainer.stick().getRawButton(6)) {
-      m_intake.intakeFunc(0.6);
+      m_intake.intakeFunc(0.4);
     } else if (m_robotContainer.stick().getRawButton(8)){
-      m_intake.intakeFunc(-0.6);
+      m_intake.intakeFunc(-0.4);
     } else {
       m_intake.intakeFunc(0);
     }

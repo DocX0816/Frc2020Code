@@ -8,11 +8,8 @@
 package frc.robot;
 
 
-//import com.analog.adis16448.frc.ADIS16448_IMU;
+import com.analog.adis16448.frc.ADIS16448_IMU;
 
-//import com.analog.adis16448.frc.ADIS16448_IMU;
-
-//import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -63,8 +60,8 @@ public class RobotContainer {
   private final Joystick m_bigStick = new Joystick(1);
   //private final ADIS16448_IMU imu = new ADIS16448_IMU();
 
-  //private final ADIS16448_IMU gyro = new ADIS16448_IMU();
-  private final AnalogGyro gyro = new AnalogGyro(0);
+  private final ADIS16448_IMU gyro = new ADIS16448_IMU();
+ //private final AnalogGyro gyro = new AnalogGyro(0);
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -134,7 +131,7 @@ public Intake get_intakeCommand() {
     return m_stick.getRawButtonPressed(5);
   }
 
-  public AnalogGyro getGyro(){
+  public ADIS16448_IMU getGyro(){
     return gyro;
   }
    

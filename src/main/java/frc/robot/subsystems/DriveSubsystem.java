@@ -25,7 +25,7 @@ public class DriveSubsystem extends SubsystemBase {
   private final double delta = 0.05;
   private final double maxSpeed = 0.8;
 
-  double kP = 1;
+  double kP = 0.0075;
   //Gyro gyro = new AnalogGyro(0);
   
   private final RobotContainer m_robotContainer;
@@ -113,15 +113,16 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void gyroDrive(double leftSpeed ,double rightSpeed) {
     double error = -m_robotContainer.getGyro().getRate();
-    double p = 1;
-    m_ddrive.tankDrive(leftSpeed + p * error, rightSpeed - p * error);
+    String str = Double.toString(error);
+    System.out.println(str);
+    m_ddrive.tankDrive(leftSpeed + kP * error, rightSpeed - kP * error);
   }
 
   public void gyroTurnFunc() {
     double error = 90 - m_robotContainer.getGyro().getAngle();
     String str = Double.toString(error);
     System.out.println(str);
-    //m_drive.tankDrive(kP * error, kP * error);
+    m_drive.tankDrive(kP * error, kP * -error);
   }
 
 
